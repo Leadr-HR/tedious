@@ -1,0 +1,30 @@
+name: Build & Publish
+
+on:
+  workflow_dispatch:
+    branches:
+      - main
+
+
+jobs:
+  publish-npm-package-to-gpr:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://npm.pkg.github.com/
+      - name: Install Dependencies
+        run: npm install
+        env:
+          github_packages_token: ${{ secrets.RUNNER_TOKEN_PRIVATE_NPM_PUBLISH }}
+      - name: Publish Package
+        run: npm publish
+        env:
+          github_packages_token: ${{ secrets.RUNNER_TOKEN_PRIVATE_NPM_PUBLISH }}

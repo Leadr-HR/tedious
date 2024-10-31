@@ -38,8 +38,7 @@
     "node": ">=18.17"
   },
   "publishConfig": {
-    "tag": "next",
-    "provenance": true
+    "registry": "https://npm.pkg.github.com/"
   },
   "dependencies": {
     "@azure/core-auth": "^1.7.2",
