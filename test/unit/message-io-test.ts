@@ -563,8 +563,9 @@ describe('MessageIO', function() {
             hadError = true;
 
             assert.instanceOf(err, Error);
-            assert.strictEqual(err.code, 'ERR_SSL_SSLV3_ALERT_HANDSHAKE_FAILURE');
-            assert.strictEqual(err.reason, 'sslv3 alert handshake failure');
+            // OpenSSL 3.6 renamed the alert from "sslv3" to "ssl/tls".
+            assert.oneOf(err.code, ['ERR_SSL_SSLV3_ALERT_HANDSHAKE_FAILURE', 'ERR_SSL_SSL/TLS_ALERT_HANDSHAKE_FAILURE']);
+            assert.oneOf(err.reason, ['sslv3 alert handshake failure', 'ssl/tls alert handshake failure']);
           }
 
           assert(hadError);
